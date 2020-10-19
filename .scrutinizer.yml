@@ -1,0 +1,31 @@
+build:
+  nodes:
+    analysis:
+      dependencies:
+        before:
+          - composer require codeception/codeception:^4.1 --dev
+      environment:
+        php:
+          version: 7.4
+      tests:
+        override:
+          - php-scrutinizer-run
+    coverage:
+      environment:
+        php:
+          version: 7.4
+      tests:
+        override:
+          - command: (./vendor/bin/codecept build && ./vendor/bin/codecept run --coverage-xml -v)
+            coverage:
+              file: src/tests/_output/coverage.xml
+              format: clover
+ 
+filter:
+    paths: ["."]
+    excluded_paths:
+        - tests/*
+checks:
+    php:
+        code_rating: true
+        duplication: true
