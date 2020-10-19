@@ -41,7 +41,7 @@ function getEmployeesByService(array $employees,string $service):array{
 /**
  * Retourne un tableau d'élement filtré satisfaisant une condition $key=$value
  * @param array $array Tableau à filtrer
-  * @param string $key nom du champ
+ * @param string $key nom du champ
  * @param mixed $value valeur de recherche
  * @return array
  */
@@ -56,9 +56,34 @@ function where(array $array, string $key, $value):array{
             return $result;
 }
 
+/**
+ * Tableau retournant uniquement $selectFields
+ * @param array $array Tableau initial
+ * @param array $selectFields Liste des champs selectionner
+ * @return array
+ */
+function select(array $array, array $selectFields):array{
+    $result = [];
+    foreach ($array as $index=>$element) {
+        
+       $result[$index]=[];
+       foreach ($selectFields as $fieldKey){
+           $result[$index][$fieldKey]=$element[$fieldKey];
+       }
+    }
+    return $result;
+}
 
-
-
+/**
+ * @param array $array
+ * @param array $selectFields
+ * @param array $where
+ * @return array
+ */
+function selectWhere(array $array, array $selectFields, array $where):array{
+    
+    return select(where($array, $where[0], $where[1]),$selectFields);
+}
 
 
 
